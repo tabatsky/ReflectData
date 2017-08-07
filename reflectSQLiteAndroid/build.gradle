@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "26.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    task jar(type: Jar) {
+        baseName 'ReflectSQLiteAndroid'
+        //from sourceSets.main.java
+        from 'build/intermediates/classes/release'
+    }
+    publishing {
+        publications {
+            api(MavenPublication) {
+                groupId 'jatx.reflectdata'
+                artifactId 'ReflectSQLiteAndroid'
+                version defaultConfig.versionName
+
+                artifact jar
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'org.apache.commons:commons-lang3:3.4'
+    //compile project(':jatxUtilsAndroid')
+    compile 'jatx.debug:Debug:1.0.1'
+    testCompile 'junit:junit:4.12'
+}
