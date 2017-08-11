@@ -73,9 +73,10 @@ public class CursorExtractor {
                                 value = cursor.getString(cursor.getColumnIndex(column.name));
                                 break;
                         }
-                    } else {
-                        Log.e(column.name, "null");
                     }
+
+                    //Log.e(column.name, Value.valueToString(value));
+
                     //if (value != null) field.set(row, value);
                     field.set(row, value);
                 }

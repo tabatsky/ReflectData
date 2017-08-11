@@ -1,5 +1,7 @@
 package jatx.reflectdata.mysql;
 
+import jatx.debug.Log;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
@@ -12,10 +14,14 @@ import java.util.Map.Entry;
 public class ResultSetExtractor {
     public static List extractResultSet(ResultSet resultSet, Class clazz) throws ReflectMySQLException
     {
-        return extractResultSet(resultSet, clazz, "#");
+        return extractResultSet(resultSet, clazz, 0);
     }
 
-    public static List extractResultSet(ResultSet resultSet, Class clazz, String configVariant) throws ReflectMySQLException {
+    public static List extractResultSet(ResultSet resultSet, Class clazz, int dbVersion) throws ReflectMySQLException {
+        return extractResultSet(resultSet, clazz, dbVersion, "#");
+    }
+
+    public static List extractResultSet(ResultSet resultSet, Class clazz, int dbVersion, String configVariant) throws ReflectMySQLException {
         try {
             List result = new ArrayList();
             Map<Field, Column> columnMap = new HashMap();
@@ -24,7 +30,7 @@ public class ResultSetExtractor {
                 int modifiers = field.getModifiers();
                 if ((Modifier.isPublic(modifiers)) && (!Modifier.isStatic(modifiers))) {
                     Column column = Column.fromField(field, configVariant);
-                    if (column != null) { columnMap.put(field, column);
+                    if (column != null && dbVersion >= column.fromVersion) { columnMap.put(field, column);
                     }
                 }
             }
@@ -65,7 +71,12 @@ public class ResultSetExtractor {
                             value = resultSet.getString(column.name);
                     }
 
-                    if (value != null) field.set(row, value);
+                    if (value != null) {
+                        //Log.e(column.name, String.valueOf(value));
+                        field.set(row, value);
+                    } else {
+                        //Log.e(column.name, "null");
+                    }
                 }
                 result.add(row);
             }

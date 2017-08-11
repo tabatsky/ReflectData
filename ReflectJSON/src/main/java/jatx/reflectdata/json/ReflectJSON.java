@@ -54,6 +54,7 @@ public class ReflectJSON {
             Field[] fields = object.getClass().getFields();
 
             for (Field field : fields) {
+                if (field.isAnnotationPresent(NoJSON.class)) continue;
                 int modifiers = field.getModifiers();
                 if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)) {
                     Class fieldType = field.getType();
@@ -102,6 +103,7 @@ public class ReflectJSON {
             Field[] fields = clazz.getFields();
 
             for (Field field : fields) {
+                if (field.isAnnotationPresent(NoJSON.class)) continue;
                 int modifiers = field.getModifiers();
                 if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)) {
                     Class fieldType = field.getType();
@@ -112,6 +114,7 @@ public class ReflectJSON {
                         value = null;
                     }
                     if (value == null) {
+                        //Log.e(field.getName(), "null");
                         field.set(object, null);
                     } else if (primitiveTypes.contains(fieldType)) {
                         if (fieldType == boolean.class) {

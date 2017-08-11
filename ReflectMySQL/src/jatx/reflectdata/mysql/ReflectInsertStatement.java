@@ -77,7 +77,7 @@ public class ReflectInsertStatement {
                     && (!field.isAnnotationPresent(DoNotCreateNorInsert.class))) {
 
                 Column column = Column.fromField(field);
-                if ((column != null) && (!column.isAutoIncrement) && (dbVersion >= column.fromVersion)) {
+                if ((column != null) && (!(column.isAutoIncrement && insertType==INSERT_DEFAULT))  && (dbVersion >= column.fromVersion)) {
                     if (functionValueMap.containsKey(column.name)) {
                         String setValueString = "`" + column.name + "`" + "=" + (String)functionValueMap.get(column.name);
 
