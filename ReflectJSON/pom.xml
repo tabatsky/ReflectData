@@ -6,7 +6,7 @@
 
     <groupId>jatx.reflectdata</groupId>
     <artifactId>ReflectJSON</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>jatx.debug</groupId>
             <artifactId>Debug</artifactId>
-            <version>1.0</version>
+            <version>1.0.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

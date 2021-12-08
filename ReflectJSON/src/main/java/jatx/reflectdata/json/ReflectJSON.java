@@ -92,7 +92,7 @@ public class ReflectJSON {
 
     public static Object fromJSON(JSONObject jsonObject, Class clazz) {
         String className = (String) jsonObject.get(FIELD_CLASS);
-        if (className.equals(ERROR_ILLEGAL_ACCESS)) {
+        if (className !=null && className.equals(ERROR_ILLEGAL_ACCESS)) {
             Log.e(LOG_TAG_REFLECT_JSON, "illegalAccess");
             return null;
         }

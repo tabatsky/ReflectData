@@ -121,7 +121,7 @@ public class ReflectInsertStatement {
 
 
         String result = header + StringUtils.join(setValueStringList, Const.STRING_GLUE) + Const.STRING_QUERY_ENDING;
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 

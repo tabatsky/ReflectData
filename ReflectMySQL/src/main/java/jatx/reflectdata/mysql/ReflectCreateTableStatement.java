@@ -79,7 +79,7 @@ public class ReflectCreateTableStatement {
         if (primaryKeyCount > 1) throw new ReflectSQLExceptions.MoreThanOnePrimaryKeyException();
         String footer = "";
         if (primaryKeyCount == 1) {
-            footer = Const.STRING_PRIMARY_KEY + primaryKeyName + "`" + "))";
+            footer = Const.STRING_PRIMARY_KEY + Const.STRING_BEFORE_NAME + primaryKeyName + Const.STRING_AFTER_NAME + "))";
         } else {
             footer = ")";
         }
